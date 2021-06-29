@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+body{
+    background:#eefafa;
+    color:black;
+    -webkit-font-smoothing: antialiased;
+    font-family:'Mulish', sans-serif;
+}
+
+.comment__box{
+    list-style-type: none;
+    padding-left: 0;
+    
+}
+.card{
+    background-color:rgb(245, 243, 240);
+}
+.mainebnaya{
+    color:rgb(153, 151, 151);
+}
+
+.comment h6{
+    font-weight:600;
+    
+}
+
+p{
+    font-size: 16px;
+    color:rgb(67, 67, 175);
+}
+
+.form-control{
+    background-color:whitesmoke;
+}
