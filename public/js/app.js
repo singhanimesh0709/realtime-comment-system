@@ -69,3 +69,30 @@ function broadcastComment(data){
 socket.on('comment',(data) => {//#########4444444
     appendToDom(data);
 })
+
+//debounce function
+let timerId = null;
+function debounce(func,timer){
+
+    if(timerId){
+        clearTimeout(timerId);
+    }
+    timerId = setTimeout(()=>{
+        func();
+    },timer);
+}
+
+let typingDiv = document.querySelector('.typing');
+socket.on('typing',(data)=>{
+    typingDiv.innerText = `${data.username} is typing ...`;
+    
+    debounce(function(){
+        typingDiv.innerText ='';  
+    },1000);
+})
+
+textarea.addEventListener('keyup',(e)=>{
+socket.emit('typing',{username});
+})
+
+// after that typing... feature, the normal comments rent working.

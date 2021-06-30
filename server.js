@@ -20,4 +20,8 @@ io.on('connection',(socket) =>{ //#######11111  //connection i s the event, and 
         data.time = Date();
         socket.broadcast.emit('comment',data);
     })
+
+    socket.on('typing',(data)=>{
+        socket.broadcast.emit('typing',data);
+    })
 })
