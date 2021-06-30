@@ -1,6 +1,6 @@
 //client side jaavascript
 let username;
-
+let socket = io();
 do {
  username = prompt('Enter your name');   
 } while (!username);  
@@ -62,5 +62,10 @@ function appendToDom(data){
 
 function broadcastComment(data){
     // socket 
+    socket.emit('comment',data);// #########222222222222
+
     
 }
+socket.on('comment',(data) => {//#########4444444
+    appendToDom(data);
+})

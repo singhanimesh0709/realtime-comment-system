@@ -25,3 +25,7 @@ Todos:
 [+] Save a comment to db on post comment
 
 [+] Show comments from DB on load
+
+Colour Scheme:
+//#fae5df #f5cac2 #ed7966 #303179 #141850
+//Pale pink, coral, gray, lilac and navy
