@@ -35,7 +35,7 @@ function postComment(comment) {
     broadcastComment(data);
     
     //sync with mongo DB
-    
+    syncWithDb(data);
 
 }
 
@@ -95,4 +95,29 @@ textarea.addEventListener('keyup',(e)=>{
 socket.emit('typing',{username});
 })
 
-// after that typing... feature, the normal comments rent working.
+// Api calls
+function syncWithDb(data){
+
+    const headers = {'Content-Type':'application/json'};
+    fetch('/api/comments',{method:'Post',body:JSON.stringify(data),headers})
+    .then(response=>{//console.log(response.json());
+        response.json().then((result)=>{
+            console.log(result);
+        })
+    })
+}
+
+function fetchComments(){
+fetch('/api/comments').then(res=>{
+    
+    res.json()// stream of data converted to json, will return a promise
+    .then((result)=>{
+        result.forEach((comment)=>{
+            comment.time = comment.createdAt;
+            appendToDom(comment);
+        })
+    })
+})
+}
+
+window.onload = fetchComments;
