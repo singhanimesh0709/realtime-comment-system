@@ -8,14 +8,14 @@ do {
 const textarea = document.querySelector('#textarea');
 const submitBtn = document.querySelector('#submitBtn');
 const commentBox = document.querySelector('.comment__box');
-
+let flag =1;
 submitBtn.addEventListener('click',(event) => {
     event.preventDefault();//button ka default action jaise ki page refresh karna ya fi url ke andar hash value aana, usko prevent karega
     let comment = textarea.value;
     if(!comment){
         return;
     }
-     
+     flag =1;
     // agar comment hoga toh yha aa jayega
     postComment(comment);
 });
@@ -27,8 +27,8 @@ function postComment(comment) {
         username:username,
         comment:comment
     }
-
-    appendToDom(data);
+    
+    appendToDom(data,flag);
     textarea.value ='';
     
     //broadcast it for the socket
@@ -40,7 +40,7 @@ function postComment(comment) {
 }
 
 
-function appendToDom(data){
+function appendToDom(data,flag){
     let lTag = document.createElement('li');
     lTag.classList.add('comment','mb-3');
     let markup = `     <div class="card border-light mb-3 ">
@@ -56,7 +56,12 @@ function appendToDom(data){
     
   `
   lTag.innerHTML = markup;
- commentBox.prepend(lTag);
+  if(flag===1){
+    commentBox.prepend(lTag);// matlab comment post hua hai
+  }else if(flag===0){
+    commentBox.appendChild(lTag);// for loadmore btn
+  }
+ 
 
 }
 
@@ -67,7 +72,7 @@ function broadcastComment(data){
     
 }
 socket.on('comment',(data) => {//#########4444444
-    appendToDom(data);
+    appendToDom(data,flag);
 })
 
 //debounce function
@@ -106,7 +111,7 @@ function syncWithDb(data){
         })
     })
 }
-
+//let flag2 = 1;
 function fetchComments(){
 fetch('/api/comments').then(res=>{
     
@@ -114,10 +119,17 @@ fetch('/api/comments').then(res=>{
     .then((result)=>{
         result.forEach((comment)=>{
             comment.time = comment.createdAt;
-            appendToDom(comment);
+            flag =0;
+            appendToDom(comment,flag);
         })
     })
 })
 }
+
+const loadMore = document.querySelector('#loadMore');
+loadMore.addEventListener('click',(e)=>{
+    //flag2 = 0;
+    fetchComments();
+});
 
 window.onload = fetchComments;

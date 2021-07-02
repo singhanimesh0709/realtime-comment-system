@@ -32,3 +32,12 @@ p {
     color:rgb(153, 151, 151);
 }
 
+.moreLink{
+    color: white;
+    
+}
+.noContent {  
+    color: #000 !important;  
+    background-color: transparent !important;  
+    pointer-events: none;  
+  } 

@@ -20,14 +20,17 @@ app.use(express.static('public'));
           res.send(response);
       });
   });
-
+  let i =0;
   app.get('/api/comments',(req,res)=>{
-      Comment.find().then(comments=>{
+      
+      Comment.find().limit(5).skip(i).sort({_id:-1}).then(comments=>{
+          i = i+5;
           res.send(comments);
       })
   });
-
+  
 const server = app.listen(port, ()=>{
+    
     console.log(`listening on port: ${port}`);
 });
 
